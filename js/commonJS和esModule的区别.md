@@ -473,9 +473,7 @@ console.log(obj1.name); // "Bob" （obj1 没有被修改）
 
 ### **初始状态**
 
-javascript
 
-Copy
 
 ```javascript
 // 模块初始化时
@@ -499,10 +497,6 @@ exports.add = function(a, b) {
 
 等价于：
 
-javascript
-
-Copy
-
 ```javascript
 module.exports.add = function(a, b) {
     return a + b;
@@ -517,9 +511,7 @@ module.exports.add = function(a, b) {
 
 如果你直接对 `exports` 赋值，会断开 `exports` 和 `module.exports` 的引用关系：
 
-javascript
 
-Copy
 
 ```javascript
 exports = function add(a, b) {
@@ -540,9 +532,7 @@ exports = function add(a, b) {
 
 如果你直接对 `module.exports` 赋值，会修改模块的实际导出对象：
 
-javascript
 
-Copy
 
 ```javascript
 module.exports = function add(a, b) {
@@ -685,9 +675,7 @@ module.exports = {
 
 在 TypeScript 中，`export const` 或 `export function` 用于描述 CommonJS 模块导出一个对象，对象中包含多个属性。例如：
 
-typescript
 
-Copy
 
 ```javascript
 // my-commonjs-module.d.ts
@@ -713,9 +701,7 @@ console.log(myVariable); // 正确
 
 或者：
 
-typescript
 
-Copy
 
 ```javascript
 import * as myModule from "my-commonjs-module";
