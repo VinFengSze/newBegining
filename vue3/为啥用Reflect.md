@@ -1,24 +1,24 @@
 ```ts
-			const obj = {
-				name: 'swf',
-				get aliname() {
-					return 'ali' + this.name;
-				},
-			}
-			const proxy = new Proxy(obj, {
-				get(target, key) {
-					console.log('get', key);
-					return target[key];
-				},
-				set(target, key, value) {
-					console.log('set', key, value);
-					target[key] = value;
-					return true;
-				}
-			})
-			effect(() => {
-				console.log(proxy.aliname); // 这里收集依赖的时候，若不用Reflect, 访问aliname 触发get aliname()方法，this指向的是obj,而不是prox对象。导致依赖没有收集。我去修改proxy.name 不会触发effect回调
-			})
-			proxy.name = 'sss';
+const person = {
+  name: "John",
+  get aliName() {
+    console.log(this);
+    return this.name + " ali";
+  },
+};
+const proxy = new Proxy(person, {
+  get(target, key, receiver) {
+    console.log("get", key);
+    return target[key];
+    // return Reflect.get(target, key, receiver);
+  },
+  set(target, key, value, receiver) {
+    console.log("set", key, value);
+    return Reflect.set(target, key, value, receiver);
+  },
+});
+proxy.aliName;
+
 ```
 
+**若用以上写法，当我访问proxy.aliName时，会触发get aliName函数。导致触发this.name访问，这个时候按道理也要触发proxy对象中的get方法。但实际结果却没有。******因为这个时候this指向person对象****
